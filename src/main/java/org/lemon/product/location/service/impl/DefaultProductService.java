@@ -74,11 +74,11 @@ class DefaultProductService implements ProductService {
   @Override
   public List<Product> getProductsNearestToLocation(String locationName) {
     //look up the location
-    List<Location> cities = locationRepository.findByName(locationName);
-    if (cities.isEmpty()) {
+    List<Location> locations = locationRepository.findByName(locationName);
+    if (locations.isEmpty()) {
       throw new BadRequestException("Unable to find a location with that name");
     }
-    Location location = cities.get(0);
+    Location location = locations.get(0);
 
     return productRepository.findAll().stream().filter(product -> !product.isDeleted())
             .filter(product -> product.getLocation().getName().equalsIgnoreCase(locationName))

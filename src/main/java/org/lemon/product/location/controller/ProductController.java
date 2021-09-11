@@ -1,6 +1,7 @@
 package org.lemon.product.location.controller;
 
 import org.lemon.product.location.model.Product;
+import org.lemon.product.location.model.ProductDTO;
 import org.lemon.product.location.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,19 +27,19 @@ public class ProductController {
 
   @GetMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public Product getProductById(@PathVariable(name = "id", required = true) Long productId) {
+  public Product getProductById(@PathVariable(name = "id") Long productId) {
     return productService.getProductById(productId);
   }
 
   @GetMapping("/nearestToLocation")
   @ResponseStatus(HttpStatus.OK)
-  public List<Product> getProductsNearestToLocation(@RequestParam(name = "location", required = true) String locationName) {
+  public List<ProductDTO> getProductsNearestToLocation(@RequestParam(name = "location") String locationName) {
     return productService.getProductsNearestToLocation(locationName);
   }
 
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public void deleteProductById(@PathVariable(name = "id", required = true) Long productId) {
+  public void deleteProductById(@PathVariable(name = "id") Long productId) {
     productService.deleteProductLogicallyById(productId);
   }
 

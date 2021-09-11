@@ -1,6 +1,7 @@
 package org.lemon.product.location.service;
 
 import org.lemon.product.location.model.Product;
+import org.lemon.product.location.model.ProductDTO;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ public interface ProductService {
 
   void deleteProductLogicallyById(Long productId);
 
-  List<Product> getProductsNearestToLocation(String locationName);
+  List<ProductDTO> getProductsNearestToLocation(String locationName);
 }

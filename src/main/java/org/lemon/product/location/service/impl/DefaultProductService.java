@@ -1,10 +1,7 @@
 package org.lemon.product.location.service.impl;
 
 import org.lemon.product.location.exception.BadRequestException;
-import org.lemon.product.location.model.Location;
-import org.lemon.product.location.model.Product;
-import org.lemon.product.location.model.LocationRepository;
-import org.lemon.product.location.model.ProductRepository;
+import org.lemon.product.location.model.*;
 import org.lemon.product.location.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,17 +59,17 @@ class DefaultProductService implements ProductService {
     });
   }
 
-  private Double distance(Double lat1, Double long1, Double lat2, Double long2) {
-    Double phi1 = lat1 * Math.PI / 180;
-    Double phi2 = lat2 * Math.PI / 180;
-    Double delta = (long2 - long1) * Math.PI / 180;
-    Double r = 6371.00;
+  private double distance(double lat1, double long1, double lat2, double long2) {
+    double phi1 = lat1 * Math.PI / 180;
+    double phi2 = lat2 * Math.PI / 180;
+    double delta = (long2 - long1) * Math.PI / 180;
+    double r = 6371.00;
     return Math.acos(Math.sin(phi1) * Math.sin(phi2) +
             Math.cos(phi1) * Math.cos(phi2) * Math.cos(delta)) * r;
   }
 
   @Override
-  public List<Product> getProductsNearestToLocation(String locationName) {
+  public List<ProductDTO> getProductsNearestToLocation(String locationName) {
     //look up the location
     List<Location> locations = locationRepository.findByName(locationName);
     if (locations.isEmpty()) {
@@ -94,6 +91,6 @@ class DefaultProductService implements ProductService {
                               location.getLatitude(),
                               location.getLongitude());
               return h1dist.compareTo(h2dist);
-            }).limit(3).collect(Collectors.toList());
+            }).map(ProductMapper.INSTANCE::producttoDTO).limit(3).collect(Collectors.toList());
   }
 }

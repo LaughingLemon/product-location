@@ -76,8 +76,7 @@ class ProductControllerTest {
     mockMvc
             .perform(get("/product/nearestToLocation?location=Amsterdam"))
             .andExpect(status().is2xxSuccessful())
-            .andExpect(jsonPath("$", hasSize(3)))
-    .andExpect(jsonPath("$.[1].location.name").value("Amsterdam"));
+            .andExpect(jsonPath("$", hasSize(3)));
   }
 
   @Test
